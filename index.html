@@ -93,7 +93,7 @@
         
         .preview {
             width: 100%;
-            aspect-ratio: 3 / 4;
+            aspect-ratio: 3/4;
             background: #000;
             border-radius: 20px;
             position: relative;
@@ -106,17 +106,18 @@
             height: 100%;
             object-fit: cover;
         }
+        /* CARD 100% ALINHADO AO RODAPÉ DA FOTO */
         
         .card {
             position: absolute;
             bottom: 0;
+            /* Cola na linha inferior da foto */
             left: 0;
             width: 100%;
             background: #fff;
-            border-radius: var(--card-radius);
-            padding: 22px;
-            transform: translateY(22px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+            border-radius: var(--card-radius) var(--card-radius) 0 0;
+            padding: 26px;
+            box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.22);
             text-align: center;
         }
         
@@ -176,10 +177,14 @@
             display: flex;
             gap: 10px;
         }
+        /* MOBILE - card um pouco menor */
         
         @media (max-width: 480px) {
+            .card {
+                padding: 18px;
+            }
             .header-wrap img {
-                width: 54px;
+                width: 52px;
             }
             .header-center .title {
                 font-size: 16px;
@@ -187,8 +192,18 @@
             .header-center .sub {
                 font-size: 14px;
             }
-            .field {
-                min-width: 120px;
+        }
+        /* DESKTOP - card maior */
+        
+        @media (min-width: 768px) {
+            .card {
+                padding: 34px;
+            }
+            .header-wrap img {
+                width: 72px;
+            }
+            .header-center .title {
+                font-size: 20px;
             }
         }
     </style>
@@ -198,7 +213,6 @@
 
     <div class="app">
 
-        <!-- FORMULÁRIO -->
         <div class="form" id="form">
             <div class="form-row">
                 <div class="col">
@@ -278,6 +292,7 @@
         <!-- PREVIEW -->
         <div class="preview" id="previewArea">
             <img id="photo" class="photo">
+
             <div class="card">
                 <div class="header-wrap">
                     <img src="img/logo22.png">
@@ -368,7 +383,6 @@
             equipe,
             data
         };
-
         const outputs = {
             r_nome,
             r_unidade,
@@ -403,18 +417,13 @@
             outputs.r_data.textContent = formatDate(inputs.data.value);
         }
 
-        document.querySelectorAll("#form input").forEach(i => {
-            i.addEventListener("input", atualizar);
-        });
+        document.querySelectorAll("#form input").forEach(i => i.addEventListener("input", atualizar));
 
         imgInput.addEventListener("change", e => {
             const file = e.target.files[0];
             if (!file) return;
-
             const reader = new FileReader();
-            reader.onload = ev => {
-                photo.src = ev.target.result;
-            };
+            reader.onload = ev => photo.src = ev.target.result;
             reader.readAsDataURL(file);
         });
 
